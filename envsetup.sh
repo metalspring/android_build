@@ -128,18 +128,20 @@ function setpaths()
     gccprebuiltdir=$(get_abs_build_var ANDROID_GCC_PREBUILTS)
 
     # defined in core/config.mk
-    targetgccversion=$(get_build_var TARGET_GCC_VERSION)
-    export TARGET_GCC_VERSION=$targetgccversion
+    targetgccversionarm=$(get_build_var TARGET_GCC_VERSION_ARM)
+    export TARGET_GCC_VERSION_ARM=$targetgccversionarm
+    targetgccversionand=$(get_build_var TARGET_GCC_VERSION_AND)
+    export TARGET_GCC_VERSION_AND=$targetgccversionand
 
     # The gcc toolchain does not exists for windows/cygwin. In this case, do not reference it.
     export ANDROID_EABI_TOOLCHAIN=
     local ARCH=$(get_build_var TARGET_ARCH)
     case $ARCH in
-        x86) toolchaindir=x86/i686-linux-android-$targetgccversion/bin
+        x86) toolchaindir=x86/i686-linux-android-$targetgccversionand/bin
             ;;
-        arm) toolchaindir=arm/arm-linux-androideabi-$targetgccversion/bin
+        arm) toolchaindir=arm/arm-linux-androideabi-$targetgccversionand/bin
             ;;
-        mips) toolchaindir=mips/mipsel-linux-android-$targetgccversion/bin
+        mips) toolchaindir=mips/mipsel-linux-android-$targetgccversionand/bin
             ;;
         *)
             echo "Can't find toolchain for unknown architecture: $ARCH"
@@ -153,7 +155,7 @@ function setpaths()
     unset ARM_EABI_TOOLCHAIN ARM_EABI_TOOLCHAIN_PATH
     case $ARCH in
         arm)
-            toolchaindir=arm/arm-eabi-$targetgccversion/bin
+            toolchaindir=arm/arm-eabi-$targetgccversionarm/bin
             if [ -d "$gccprebuiltdir/$toolchaindir" ]; then
                  export ARM_EABI_TOOLCHAIN="$gccprebuiltdir/$toolchaindir"
                  ARM_EABI_TOOLCHAIN_PATH=":$gccprebuiltdir/$toolchaindir"
@@ -1457,10 +1459,6 @@ if [ "x$SHELL" != "x/bin/bash" ]; then
             echo "WARNING: Only bash is supported, use of other shell would lead to erroneous results"
             ;;
     esac
-fi
-
-if [ ! "$TARGET_TOOLS_PREFIX" ]; then
-    export TARGET_TOOLS_PREFIX="prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.8-linaro/bin/arm-linux-androideabi-"
 fi
 
 # Execute the contents of any vendorsetup.sh files we can find.

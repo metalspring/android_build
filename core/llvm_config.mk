@@ -14,7 +14,7 @@ endef
 
 
 CLANG_CONFIG_EXTRA_CFLAGS := \
-  -O4 \
+  -O3 \
   -D__compiler_offsetof=__builtin_offsetof \
   -fstrict-aliasing
 
@@ -22,7 +22,8 @@ CLANG_CONFIG_UNKNOWN_CFLAGS := \
   -funswitch-loops  \
   -fno-toplevel-reorder \
   -flto-compression-level=5 \
-  -fuse-linker-plugin
+  -fuse-linker-plugin \
+  -Wstrict-aliasing=3
 
 ifeq ($(TARGET_ARCH),arm)
   RS_TRIPLE := armv7-none-linux-gnueabi

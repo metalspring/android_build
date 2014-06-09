@@ -47,7 +47,7 @@ $(combo_target)HAVE_STRLCAT := 0
 $(combo_target)HAVE_KERNEL_MODULES := 0
 
 $(combo_target)GLOBAL_CFLAGS := -fstrict-aliasing -Wstrict-aliasing=3 -Werror=strict-aliasing -fno-exceptions -Wno-multichar
-$(combo_target)RELEASE_CFLAGS := -O3 -g -fstrict-aliasing -Wstrict-aliasing=3
+$(combo_target)RELEASE_CFLAGS := -O3 -fstrict-aliasing -Wstrict-aliasing=3
 ifneq ($(combo_target),HOST_)
 $(combo_target)RELEASE_CFLAGS += -Wstrict-aliasing=3 -Werror=strict-aliasing
 else

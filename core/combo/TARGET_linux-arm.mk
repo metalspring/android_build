@@ -35,13 +35,13 @@ TARGET_ARCH_VARIANT := armv5te
 endif
 
 ifeq ($(strip $(TARGET_GCC_VERSION_AND)),)
-TARGET_GCC_VERSION_AND := 4.7
+TARGET_GCC_VERSION_AND := 4.8
 else
 TARGET_GCC_VERSION_AND := $(TARGET_GCC_VERSION_AND)
 endif
 
 ifeq ($(strip $(TARGET_GCC_VERSION_ARM)),)
-TARGET_GCC_VERSION_ARM := 4.7
+TARGET_GCC_VERSION_ARM := 4.9
 else
 TARGET_GCC_VERSION_ARM := $(TARGET_GCC_VERSION_ARM)
 endif
@@ -194,7 +194,6 @@ endif
 # More flags/options can be added here
 TARGET_RELEASE_CFLAGS += \
 			-DNDEBUG \
-			-g \
 			-fstrict-aliasing \
 			-Wstrict-aliasing=3 \
 			-Werror=strict-aliasing \
@@ -223,10 +222,8 @@ endif
 
 ifneq ($(strip $(DISABLE_BUILD_LTO)),)
 # Disable global LTO if DISABLE_BUILD_LTO is set.
-TARGET_LTO_CFLAGS := -flto \
-                     -fno-toplevel-reorder \
-                     -flto-compression-level=5 \
-                     -fuse-linker-plugin
+TARGET_LTO_CFLAGS := -flto -fno-toplevel-reorder -fuse-linker-plugin
+TARGET_LTO_LDFLAGS := -Wl,-flto
 endif
 
 # Define FDO (Feedback Directed Optimization) options.
